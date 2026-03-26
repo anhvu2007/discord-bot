@@ -19,12 +19,16 @@ client.on("ready", () => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
+  // THÊM DÒNG NÀY: Chỉ gửi nếu là channelId mục tiêu
+  // Bạn lấy ID bằng cách chuột phải vào tên kênh bên Discord -> Copy Channel ID
+  if (message.channel.id !== '1486017673916710924') return; 
+
   try {
     await fetch(WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        chatInput: message.content, // Đổi thành chatInput cho khớp với n8n của bạn
+        chatInput: message.content,
         user: message.author.username,
         channelId: message.channel.id
       })
